@@ -7176,6 +7176,21 @@ spec:
                     format: int32
                     type: integer
                 type: object
+              monitoring:
+                properties:
+                  enableHTTP2:
+                    type: boolean
+                  enabled:
+                    type: boolean
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  scrapeInterval:
+                    type: string
+                required:
+                - labels
+                type: object
               nodeSelector:
                 additionalProperties:
                   type: string

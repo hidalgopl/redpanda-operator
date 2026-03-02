@@ -278,3 +278,9 @@ strategy: {}
 
 tests:
   enabled: true
+
+monitoring:
+  enabled: false
+  enableHTTP2: false
+  scrapeInterval: "1m"
+  labels: {}

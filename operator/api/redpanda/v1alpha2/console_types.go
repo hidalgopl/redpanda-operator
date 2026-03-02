@@ -139,6 +139,8 @@ type ConsoleValues struct {
 	// been dropped and why.
 	// Setting this field has no effect.
 	Warnings []string `json:"warnings,omitempty"`
+
+	Monitoring MonitoringConfig `json:"monitoring,omitempty"`
 }
 
 type AutoScaling struct {
@@ -332,4 +334,11 @@ func ConvertConsoleSubchartToConsoleValues(src *RedpandaConsole) (*ConsoleValues
 	out.Warnings = warnings
 
 	return out, nil
+}
+
+type MonitoringConfig struct {
+	Enabled        *bool             `json:"enabled,omitempty"`
+	ScrapeInterval *string           `json:"scrapeInterval,omitempty"`
+	EnableHTTP2    *bool             `json:"enableHTTP2,omitempty"`
+	Labels         map[string]string `json:"labels"`
 }
