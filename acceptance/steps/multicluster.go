@@ -12,6 +12,7 @@ package steps
 import (
 	"context"
 	"fmt"
+	"os"
 	"slices"
 	"time"
 
@@ -27,6 +28,7 @@ import (
 	framework "github.com/redpanda-data/redpanda-operator/harpoon"
 	"github.com/redpanda-data/redpanda-operator/pkg/helm"
 	"github.com/redpanda-data/redpanda-operator/pkg/multicluster/bootstrap"
+	"github.com/redpanda-data/redpanda-operator/pkg/testutil"
 	"github.com/redpanda-data/redpanda-operator/pkg/vcluster"
 )
 
@@ -99,7 +101,7 @@ func getNodes(ctx context.Context, name string) vclusterNodes {
 func iApplyKuberneteMulticlusterManifest(ctx context.Context, t framework.TestingT, clusterName string, manifest *godog.DocString) {
 	nodes := getNodes(ctx, clusterName)
 	nodes.ApplyAll(ctx, []byte(manifest.Content))
-	t.Cleanup(func(ctx context.Context) {
+	cleanupWrapper(t, func(ctx context.Context) {
 		nodes.DeleteAll(ctx, []byte(manifest.Content))
 	})
 }
@@ -112,18 +114,20 @@ func checkMulticlusterFinalizers(ctx context.Context, t framework.TestingT, clus
 
 func createNetworkedVClusterOperators(ctx context.Context, t framework.TestingT, clusterName string, clusters int32) context.Context {
 	namespace := metav1.NamespaceDefault
-
+	redpandaLicense := os.Getenv("REDPANDA_LICENSE_KEY")
+	require.NotEmpty(t, redpandaLicense, "REDPANDA_LICENSE_KEY env var must be set")
+	// create license secret in the k3s cluster
 	vclusters := []*vclusterNode{}
 	t.Logf("creating %d vclusters", clusters)
 	for i := range clusters {
 		t.Logf("creating vcluster %d", i+1)
-		cluster, err := vcluster.New(ctx, t.RestConfig())
+		cluster, err := vcluster.New(ctx, t.RestConfig(), vcluster.WithName(fmt.Sprintf("vc-%d", i)))
 		require.NoError(t, err)
 		cluster.SetScheme(t.Scheme())
 
 		t.Logf("finished creating vcluster %d (name: %q)", i+1, cluster.Name())
 
-		t.Cleanup(func(ctx context.Context) {
+		cleanupWrapper(t, func(ctx context.Context) {
 			require.NoError(t, cluster.Delete())
 		})
 		c, err := cluster.Client(client.Options{Scheme: t.Scheme()})
@@ -203,13 +207,26 @@ func createNetworkedVClusterOperators(ctx context.Context, t framework.TestingT,
 
 	// and finally we do the operator installation in each cluster
 	for _, cluster := range vclusters {
+		t.Logf("creating license secret in %q", cluster.Name())
+		require.NoError(t, cluster.Create(ctx, &corev1.Secret{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      "redpanda-license",
+				Namespace: namespace,
+			},
+			Data: map[string][]byte{
+				"redpanda.license": []byte(redpandaLicense),
+			},
+		}))
+
 		t.Logf("deploying operator in %q", cluster.Name())
 		rel, err := cluster.HelmInstall(ctx, "../operator/chart", helm.InstallOptions{
 			Name: "redpanda",
 			Values: map[string]any{
 				"crds": map[string]any{
-					"enabled": true,
+					"enabled":      true,
+					"experimental": true,
 				},
+				"logLevel": "trace",
 				"multicluster": map[string]any{
 					"enabled":                  true,
 					"name":                     cluster.Name(),
@@ -220,14 +237,28 @@ func createNetworkedVClusterOperators(ctx context.Context, t framework.TestingT,
 					"repository": "localhost/redpanda-operator",
 					"tag":        "dev",
 				},
+				"enterprise": map[string]any{
+					"licenseSecretRef": map[string]any{
+						"name": "redpanda-license",
+						"key":  "redpanda.license",
+					},
+				},
 			},
 			Namespace: namespace,
 		})
 		require.NoError(t, err)
-		t.Cleanup(func(ctx context.Context) {
+		cleanupWrapper(t, func(ctx context.Context) {
 			require.NoError(t, cluster.HelmUninstall(ctx, rel))
 		})
 	}
 
 	return stashNodes(ctx, clusterName, vclusters)
+}
+
+func cleanupWrapper(t framework.TestingT, f func(ctx context.Context)) {
+	if testutil.MultiClusterSetupOnly() {
+		// skip cleanup
+		return
+	}
+	t.Cleanup(f)
 }

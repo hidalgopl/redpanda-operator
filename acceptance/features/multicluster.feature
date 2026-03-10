@@ -1,7 +1,7 @@
 @operator:none
 Feature: Multicluster Operator
 
-  @skip:gke @skip:aks @skip:eks @skip:k3d
+  @skip:gke @skip:aks @skip:eks
   Scenario: Multicluster finalizers
     Given I create a multicluster operator named "multicluster" with 3 nodes
     And I apply a multicluster Kubernetes manifest to "multicluster":

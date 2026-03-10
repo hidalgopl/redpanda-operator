@@ -65,6 +65,8 @@ var setupSuite = sync.OnceValues(func() (*framework.Suite, error) {
 			"quay.io/jetstack/cert-manager-cainjector:v1.14.2",
 			"quay.io/jetstack/cert-manager-startupapicheck:v1.14.2",
 			"quay.io/jetstack/cert-manager-webhook:v1.14.2",
+			"ghcr.io/loft-sh/kubernetes:v1.33.4",
+			"ghcr.io/loft-sh/vcluster-pro:0.28.0",
 		}...).
 		WithSchemeFunctions(vectorizedv1alpha1.Install, redpandav1alpha1.Install, redpandav1alpha2.Install).
 		WithHelmChart("https://charts.jetstack.io", "jetstack", "cert-manager", helm.InstallOptions{
