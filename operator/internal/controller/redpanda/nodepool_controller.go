@@ -54,6 +54,14 @@ type NodePoolReconciler struct {
 	Manager multicluster.Manager
 }
 
+// Engage implements multicluster.Aware — called by the multicluster controller
+// framework when a new cluster is engaged. This is used for debug logging.
+func (r *NodePoolReconciler) Engage(ctx context.Context, clusterName string, _ cluster.Cluster) error {
+	log.FromContext(ctx).WithName("NodePoolReconciler.Engage").Info("cluster engaged", "cluster", clusterName)
+	return nil
+}
+
+
 func SetupWithMultiClusterManager(mgr multicluster.Manager) error {
 	mgr.GetLogger().WithName("SetupWithMultiClusterManager").Info("registering NodePool controller", "knownClusters", mgr.GetClusterNames())
 	return mcbuilder.ControllerManagedBy(mgr).
@@ -88,6 +96,7 @@ func SetupWithMultiClusterManager(mgr multicluster.Manager) error {
 					})
 				}
 				return requests
+
 			})
 		}).
 		Watches(&redpandav1alpha2.StretchCluster{}, func(_ string, _ cluster.Cluster) mchandler.EventHandler {
