@@ -18,7 +18,6 @@ import (
 	"k8s.io/utils/ptr"
 
 	redpandav1alpha2 "github.com/redpanda-data/redpanda-operator/operator/api/redpanda/v1alpha2"
-	"github.com/redpanda-data/redpanda-operator/operator/pkg/tplutil"
 )
 
 // secrets returns all Secrets for the given RenderState.
@@ -112,14 +111,13 @@ func secretSASLUsers(state *RenderState) (*corev1.Secret, error) {
 	}, nil
 }
 
-// secretBootstrapUser returns the bootstrap user Secret. If an existing secret
-// was found during state construction (fetchBootstrapUser), it's returned as-is
-// to preserve the password across reconciliations. Otherwise a new secret with a
-// random 32-char password is created. The secret is marked Immutable so that
-// Kubernetes rejects any future mutations — password rotation requires deleting
-// and re-creating the secret.
+// secretBootstrapUser returns the bootstrap user Secret. The password is
+// determined centrally by syncBootstrapUser and injected via RenderState so
+// that every cluster gets the same credential. The secret is marked Immutable
+// so that Kubernetes rejects any future mutations — password rotation requires
+// deleting and re-creating the secret.
 func secretBootstrapUser(state *RenderState) *corev1.Secret {
-	if !state.Spec().Auth.IsSASLEnabled() {
+	if !state.Spec().Auth.IsSASLEnabled() || state.bootstrapPassword == "" {
 		return nil
 	}
 
@@ -127,13 +125,6 @@ func secretBootstrapUser(state *RenderState) *corev1.Secret {
 	if sasl.BootstrapUser != nil && sasl.BootstrapUser.SecretKeyRef != nil {
 		return nil
 	}
-
-	// Re-emit the existing secret to preserve the password.
-	if state.bootstrapUserSecret != nil {
-		return state.bootstrapUserSecret
-	}
-
-	password := tplutil.RandAlphaNum(32)
 
 	return &corev1.Secret{
 		TypeMeta: metav1.TypeMeta{
@@ -148,7 +139,7 @@ func secretBootstrapUser(state *RenderState) *corev1.Secret {
 		Immutable: ptr.To(true),
 		Type:      corev1.SecretTypeOpaque,
 		StringData: map[string]string{
-			"password": password,
+			"password": state.bootstrapPassword,
 		},
 	}
 }

@@ -13,6 +13,9 @@ Feature: Multicluster Operator
       name: cluster
       namespace: default
     spec:
+      auth:
+        sasl:
+          enabled: true
       rbac:
         enabled: true
       service:
@@ -40,3 +43,4 @@ Feature: Multicluster Operator
     And I expect all 3 NodePools in "multicluster" to be eventually bound and deployed
     When I execute "rpk cluster health" command in the statefulset container in each cluster
     And I expect them to return the same Redpanda cluster UID and the node count equal to 3
+    And I execute "rpk topic create sasl-test -p 1 -r 3 && rpk topic list" command in the first statefulset container

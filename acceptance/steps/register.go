@@ -110,6 +110,7 @@ func init() {
 	framework.RegisterStep(`^I expect (\d+) statefulsets in (\d+) kubernetes cluster to be created and eventually ready$`, expectStatefulsetsReady)
 	framework.RegisterStep(`^I expect all (\d+) NodePools in "([^"]*)" to be eventually bound and deployed$`, expectNodePoolsBoundAndDeployed)
 	framework.RegisterStep(`^I execute "([^"]*)" command in the statefulset container in each cluster$`, executeCommandInStatefulsetContainers)
+	framework.RegisterStep(`^I execute "([^"]*)" command in the first statefulset container$`, executeCommandInFirstStatefulsetContainer)
 	framework.RegisterStep(`^I expect them to return the same Redpanda cluster UID and the node count equal to (\d+)$`, expectSameClusterUIDAndNodeCount)
 
 	// Scaling scenario steps

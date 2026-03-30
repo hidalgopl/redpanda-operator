@@ -122,20 +122,17 @@ func TestSyncBootstrapUser_NoExistingSecrets(t *testing.T) {
 	require.NotEmpty(t, state.bootstrapPassword)
 	require.Len(t, state.bootstrapPassword, 32)
 	require.Equal(t, defaultBootstrapUsername, state.bootstrapUser)
+	require.Equal(t, state.bootstrapPassword, state.cluster.BootstrapPassword)
 
-	// Verify secret was created in all clusters with the same password.
+	// syncBootstrapUser no longer creates secrets — the render pipeline does.
+	// Verify no secrets were created.
 	for _, clusterName := range clusterNames {
 		var secret corev1.Secret
-		secretName := bootstrapSecretName(sc)
 		err := clients[clusterName].Get(ctx, types.NamespacedName{
 			Namespace: sc.Namespace,
-			Name:      secretName,
+			Name:      bootstrapSecretName(sc),
 		}, &secret)
-		require.NoError(t, err, "secret should exist in cluster %s", clusterName)
-		require.Equal(t, state.bootstrapPassword, string(secret.Data[bootstrapUserPasswordKey]))
-		require.Equal(t, corev1.SecretTypeOpaque, secret.Type)
-		require.NotNil(t, secret.Immutable)
-		require.True(t, *secret.Immutable)
+		require.True(t, k8sapierrors.IsNotFound(err), "secret should NOT exist in cluster %s (render pipeline creates it)", clusterName)
 	}
 
 	// Verify condition was set: Synced (newly generated).
@@ -179,15 +176,15 @@ func TestSyncBootstrapUser_ExistingSecretInOneCluster(t *testing.T) {
 
 	// Verify the existing password was reused (not regenerated).
 	require.Equal(t, existingPassword, state.bootstrapPassword)
+	require.Equal(t, existingPassword, state.cluster.BootstrapPassword)
 
-	// Verify the same password was distributed to cluster-b.
+	// syncBootstrapUser no longer creates secrets — cluster-b should still be empty.
 	var secret corev1.Secret
 	err = clients["cluster-b"].Get(ctx, types.NamespacedName{
 		Namespace: sc.Namespace,
 		Name:      bootstrapSecretName(sc),
 	}, &secret)
-	require.NoError(t, err)
-	require.Equal(t, existingPassword, string(secret.Data[bootstrapUserPasswordKey]))
+	require.True(t, k8sapierrors.IsNotFound(err), "secret should NOT exist in cluster-b (render pipeline creates it)")
 
 	// Verify condition was set: ExistingReused.
 	cond := apimeta.FindStatusCondition(sc.Status.Conditions, ConditionTypeBootstrapUserSynced)

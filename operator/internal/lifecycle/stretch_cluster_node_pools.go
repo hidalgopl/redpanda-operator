@@ -52,7 +52,7 @@ func (m *StretchNodePoolRenderer) Render(ctx context.Context, cluster *StretchCl
 	// of which operator instance (local vs remote) performs the reconciliation.
 	canonicalName := CanonicalClusterName(clusterName, m.mgr)
 
-	state, err := multiclusterRenderer.NewRenderState(cl.GetConfig(), cluster.StretchCluster, cluster.GetNodePoolsForCluster(canonicalName), []string{}, canonicalName)
+	state, err := multiclusterRenderer.NewRenderState(cl.GetConfig(), cluster.StretchCluster, cluster.GetNodePoolsForCluster(canonicalName), []string{}, canonicalName, cluster.BootstrapPassword)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

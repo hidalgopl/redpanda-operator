@@ -52,6 +52,7 @@ func (m *StretchClusterSimpleResourceRenderer) Render(ctx context.Context, clust
 		cluster.GetNodePoolsForCluster(canonicalName),
 		SeedServersFromNodePools(cluster.StretchCluster, cluster.NodePools),
 		canonicalName,
+		cluster.BootstrapPassword,
 	)
 	if err != nil {
 		return nil, errors.WithStack(err)

@@ -17,8 +17,9 @@ import (
 // StretchClusterWithPools serves as an intermediate structure to merge a Cluster with its NodePools in v2
 type StretchClusterWithPools struct {
 	*redpandav1alpha2.StretchCluster
-	NodePools []*NodePoolInCluster
-	clusters  []string
+	NodePools         []*NodePoolInCluster
+	clusters          []string
+	BootstrapPassword string
 }
 
 type NodePoolInCluster struct {

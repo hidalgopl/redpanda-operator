@@ -168,7 +168,7 @@ func TestStretchClusterResourceClient(t *testing.T) {
 			cl, err := manager.GetCluster(ctx, "")
 			require.NoError(t, err)
 
-			state, err := multiclusterRenderer.NewRenderState(cl.GetConfig(), cluster.StretchCluster, cluster.GetNodePoolsForCluster(""), []string{}, "")
+			state, err := multiclusterRenderer.NewRenderState(cl.GetConfig(), cluster.StretchCluster, cluster.GetNodePoolsForCluster(""), []string{}, "", "")
 			require.NoError(t, err)
 
 			yamlBytes, err := yaml.Marshal(map[string]any{

@@ -437,44 +437,9 @@ func (r *MulticlusterReconciler) syncBootstrapUser(ctx context.Context, state *s
 		logger.V(log.DebugLevel).Info("generated new bootstrap user password")
 	}
 
-	// Phase 3: ensure the secret exists in every cluster.
-	for _, clusterName := range clusterNames {
-		cl, err := r.Manager.GetCluster(ctx, clusterName)
-		if err != nil {
-			return ctrl.Result{}, errors.Wrapf(err, "getting cluster %s", clusterName)
-		}
-
-		secretName := bootstrapSecretName(sc)
-		k8sClient := cl.GetClient()
-
-		var existing corev1.Secret
-		if err := k8sClient.Get(ctx, client.ObjectKey{
-			Namespace: sc.Namespace,
-			Name:      secretName,
-		}, &existing); err == nil {
-			// Secret already exists — nothing to do for this cluster.
-			continue
-		}
-
-		secret := &corev1.Secret{
-			ObjectMeta: metav1.ObjectMeta{
-				Name:      secretName,
-				Namespace: sc.Namespace,
-			},
-			Immutable: ptr.To(true),
-			Type:      corev1.SecretTypeOpaque,
-			Data: map[string][]byte{
-				bootstrapUserPasswordKey: []byte(canonicalPassword),
-			},
-		}
-
-		if err := k8sClient.Create(ctx, secret); err != nil {
-			return ctrl.Result{}, errors.Wrapf(err, "creating bootstrap user secret in cluster %s", clusterName)
-		}
-		logger.Info("created bootstrap user secret", "cluster", clusterName, "secret", secretName)
-	}
-
-	// Phase 4: set status condition.
+	// Phase 3: set status condition. The actual K8s Secret is created by the
+	// render pipeline (secretBootstrapUser) via the lifecycle Syncer, which is
+	// the sole writer. This avoids dual-writer conflicts on the immutable secret.
 	if generated {
 		apimeta.SetStatusCondition(&sc.Status.Conditions, metav1.Condition{
 			Type:               ConditionTypeBootstrapUserSynced,
@@ -495,6 +460,7 @@ func (r *MulticlusterReconciler) syncBootstrapUser(ctx context.Context, state *s
 
 	state.bootstrapUser = defaultBootstrapUsername
 	state.bootstrapPassword = canonicalPassword
+	state.cluster.BootstrapPassword = canonicalPassword
 
 	return ctrl.Result{}, nil
 }

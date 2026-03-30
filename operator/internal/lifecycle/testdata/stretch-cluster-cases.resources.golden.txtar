@@ -1679,6 +1679,7 @@
       app.kubernetes.io/component: redpanda-basic-a-statefulset
       app.kubernetes.io/instance: compat-test
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -1724,6 +1725,7 @@
       app.kubernetes.io/component: redpanda-basic-b-statefulset
       app.kubernetes.io/instance: compat-test
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -2682,6 +2684,7 @@
       app.kubernetes.io/component: redpanda-basic-a-statefulset
       app.kubernetes.io/instance: nodepool-basic-test
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -2727,6 +2730,7 @@
       app.kubernetes.io/component: redpanda-basic-b-statefulset
       app.kubernetes.io/instance: nodepool-basic-test
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}

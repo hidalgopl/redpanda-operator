@@ -16,9 +16,7 @@ import (
 
 	"github.com/redpanda-data/common-go/kube"
 	appsv1 "k8s.io/api/apps/v1"
-	corev1 "k8s.io/api/core/v1"
 	k8sapierrors "k8s.io/apimachinery/pkg/api/errors"
-	"k8s.io/utils/ptr"
 
 	redpandav1alpha2 "github.com/redpanda-data/redpanda-operator/operator/api/redpanda/v1alpha2"
 	"github.com/redpanda-data/redpanda-operator/operator/pkg/tplutil"
@@ -37,7 +35,7 @@ type RenderState struct {
 	client *kube.Ctl
 
 	seedServers          []string
-	bootstrapUserSecret  *corev1.Secret
+	bootstrapPassword    string
 	statefulSetPodLabels map[string]string
 	statefulSetSelector  map[string]string
 }
@@ -54,6 +52,7 @@ func NewRenderState(
 	pools []*redpandav1alpha2.NodePool,
 	seedServers []string,
 	clusterName string,
+	bootstrapPassword string,
 ) (*RenderState, error) {
 	// Deep-copy to avoid mutating the caller's CRD objects.
 	cluster = cluster.DeepCopy()
@@ -84,18 +83,16 @@ func NewRenderState(
 	}
 
 	state := &RenderState{
-		cluster:     cluster,
-		pools:       copiedPools,
-		clusterName: clusterName,
-		releaseName: releaseName,
-		namespace:   cluster.Namespace,
-		client:      ctl,
-		seedServers: seedServers,
+		cluster:           cluster,
+		pools:             copiedPools,
+		clusterName:       clusterName,
+		releaseName:       releaseName,
+		namespace:         cluster.Namespace,
+		client:            ctl,
+		seedServers:       seedServers,
+		bootstrapPassword: bootstrapPassword,
 	}
 
-	if err := state.fetchBootstrapUser(); err != nil {
-		return nil, err
-	}
 	if err := state.fetchStatefulSetPodSelector(); err != nil {
 		return nil, err
 	}
@@ -189,35 +186,6 @@ func (r *RenderState) allPodNames() []string {
 		}
 	}
 	return names
-}
-
-// fetchBootstrapUser looks up an existing bootstrap user secret so that we
-// re-emit it with the same password rather than generating a new random one
-// on every reconciliation. If the secret doesn't exist yet, secretBootstrapUser()
-// will create one with a fresh random password.
-func (r *RenderState) fetchBootstrapUser() error {
-	if r.client == nil || !r.Spec().Auth.IsSASLEnabled() {
-		return nil
-	}
-
-	sasl := r.Spec().Auth.SASL
-	// If the user explicitly provides a secretKeyRef, they own the secret.
-	if sasl.BootstrapUser != nil && sasl.BootstrapUser.SecretKeyRef != nil {
-		return nil
-	}
-
-	secretName := fmt.Sprintf("%s-bootstrap-user", r.fullname())
-
-	var existing corev1.Secret
-	if err := r.client.Get(context.Background(), kube.ObjectKey{Namespace: r.namespace, Name: secretName}, &existing); err != nil {
-		if k8sapierrors.IsNotFound(err) {
-			return nil
-		}
-		return fmt.Errorf("fetching bootstrap user secret %s/%s: %w", r.namespace, secretName, err)
-	}
-	existing.Immutable = ptr.To(true)
-	r.bootstrapUserSecret = &existing
-	return nil
 }
 
 // fetchStatefulSetPodSelector preserves the existing StatefulSet's label

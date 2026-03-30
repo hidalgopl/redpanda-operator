@@ -654,6 +654,70 @@ func expectSameClusterUIDAndNodeCount(ctx context.Context, t framework.TestingT,
 		len(results), results[0].clusterUID, expectedNodeCount)
 }
 
+// executeCommandInFirstStatefulsetContainer runs a command in the first pod of
+// the first cluster's StatefulSet. It asserts the command exits 0 — used for
+// Kafka API smoke tests (e.g. rpk topic create) where we just need success.
+func executeCommandInFirstStatefulsetContainer(ctx context.Context, t framework.TestingT, command string) {
+	nodes := getLastMulticlusterNodes(ctx)
+	require.NotEmpty(t, nodes, "no multicluster nodes available")
+
+	node := nodes[0]
+
+	require.Eventually(t, func() bool {
+		var stsList appsv1.StatefulSetList
+		if err := node.List(ctx, &stsList, client.InNamespace("default"), client.MatchingLabels{"app.kubernetes.io/name": "redpanda"}); err != nil {
+			t.Logf("error listing statefulsets in %s: %v", node.Name(), err)
+			return false
+		}
+		if len(stsList.Items) == 0 {
+			t.Logf("no redpanda StatefulSets in %s", node.Name())
+			return false
+		}
+
+		sts := stsList.Items[0]
+		selector, err := metav1.LabelSelectorAsSelector(sts.Spec.Selector)
+		if err != nil {
+			t.Logf("error parsing selector for sts %s: %v", sts.Name, err)
+			return false
+		}
+
+		var pods corev1.PodList
+		if err := node.List(ctx, &pods, client.InNamespace("default"), client.MatchingLabelsSelector{Selector: selector}); err != nil {
+			t.Logf("error listing pods in %s: %v", node.Name(), err)
+			return false
+		}
+		if len(pods.Items) == 0 {
+			t.Logf("no pods for StatefulSet %s in %s", sts.Name, node.Name())
+			return false
+		}
+
+		pod := &pods.Items[0]
+		pfCfg, err := node.PortForwardedRESTConfig(ctx)
+		if err != nil {
+			t.Logf("error creating port-forwarded config for %s: %v", node.Name(), err)
+			return false
+		}
+		ctl, err := kube.FromRESTConfig(pfCfg)
+		if err != nil {
+			t.Logf("error creating kube ctl for %s: %v", node.Name(), err)
+			return false
+		}
+
+		var stdout bytes.Buffer
+		if err := ctl.Exec(ctx, pod, kube.ExecOptions{
+			Container: "redpanda",
+			Command:   []string{"/bin/bash", "-c", command},
+			Stdout:    &stdout,
+		}); err != nil {
+			t.Logf("error executing %q in %s: %v", command, node.Name(), err)
+			return false
+		}
+
+		t.Logf("command %q succeeded in %s: %s", command, node.Name(), stdout.String())
+		return true
+	}, 5*time.Minute, 10*time.Second, "failed to execute %q in first cluster", command)
+}
+
 // parseNodeCountFromHealthOutput parses the "All nodes" line from rpk cluster health output.
 // Example: "All nodes:             [0 1 2]" → 3
 var allNodesRe = regexp.MustCompile(`All nodes:\s*\[([^\]]*)\]`)

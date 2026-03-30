@@ -721,6 +721,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: audit-logging
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -764,6 +765,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: audit-logging
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -807,6 +809,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: audit-logging
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -1571,6 +1574,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: common-labels
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -1616,6 +1620,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: common-labels
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -1661,6 +1666,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: common-labels
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -2387,6 +2393,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-cluster-domain
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -2430,6 +2437,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-cluster-domain
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -2473,6 +2481,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-cluster-domain
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -3200,6 +3209,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-config
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -3243,6 +3253,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-config
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -3286,6 +3297,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-config
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -4012,6 +4024,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-image
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -4055,6 +4068,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-image
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -4098,6 +4112,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-image
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -4824,6 +4839,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-resources
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -4867,6 +4883,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-resources
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -4910,6 +4927,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-resources
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -5636,6 +5654,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-resources-explicit
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -5679,6 +5698,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-resources-explicit
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -5722,6 +5742,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: custom-resources-explicit
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -6448,6 +6469,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: enterprise
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -6491,6 +6513,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: enterprise
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -6534,6 +6557,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: enterprise
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -7230,6 +7254,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-loadbalancer
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -7273,6 +7298,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-loadbalancer
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -7316,6 +7342,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-loadbalancer
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -8034,6 +8061,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-nodeport
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -8077,6 +8105,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-nodeport
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -8120,6 +8149,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-nodeport
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -8840,6 +8870,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-tls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -8883,6 +8914,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-tls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -8926,6 +8958,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: external-tls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -10186,6 +10219,7 @@
       app.kubernetes.io/component: redpanda-pool-cold-statefulset
       app.kubernetes.io/instance: full-featured
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
       tier: cold
     type: ClusterIP
   status:
@@ -10231,6 +10265,7 @@
       app.kubernetes.io/component: redpanda-pool-cold-statefulset
       app.kubernetes.io/instance: full-featured
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
       tier: cold
     type: ClusterIP
   status:
@@ -10276,6 +10311,7 @@
       app.kubernetes.io/component: redpanda-pool-hot-statefulset
       app.kubernetes.io/instance: full-featured
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
       tier: hot
     type: ClusterIP
   status:
@@ -10321,6 +10357,7 @@
       app.kubernetes.io/component: redpanda-pool-hot-statefulset
       app.kubernetes.io/instance: full-featured
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
       tier: hot
     type: ClusterIP
   status:
@@ -10366,6 +10403,7 @@
       app.kubernetes.io/component: redpanda-pool-hot-statefulset
       app.kubernetes.io/instance: full-featured
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
       tier: hot
     type: ClusterIP
   status:
@@ -11145,6 +11183,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: init-containers
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -11188,6 +11227,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: init-containers
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -11231,6 +11271,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: init-containers
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -11957,6 +11998,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: memory-locking
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -12000,6 +12042,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: memory-locking
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -12043,6 +12086,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: memory-locking
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -12769,6 +12813,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: minimal
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -12812,6 +12857,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: minimal
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -12855,6 +12901,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: minimal
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -13607,6 +13654,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: monitoring
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -13650,6 +13698,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: monitoring
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -13693,6 +13742,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: monitoring
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -14669,6 +14719,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: multi-pool
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -14712,6 +14763,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: multi-pool
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -14755,6 +14807,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: multi-pool
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -14798,6 +14851,7 @@
       app.kubernetes.io/component: redpanda-pool-b-statefulset
       app.kubernetes.io/instance: multi-pool
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
       pool-type: hot-storage
     type: ClusterIP
   status:
@@ -14842,6 +14896,7 @@
       app.kubernetes.io/component: redpanda-pool-b-statefulset
       app.kubernetes.io/instance: multi-pool
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
       pool-type: hot-storage
     type: ClusterIP
   status:
@@ -15612,6 +15667,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: rack-awareness
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -15655,6 +15711,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: rack-awareness
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -15698,6 +15755,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: rack-awareness
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -16443,6 +16501,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: sasl-scram256
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -16486,6 +16545,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: sasl-scram256
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -16529,6 +16589,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: sasl-scram256
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -17274,6 +17335,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: sasl-scram512-with-tls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -17317,6 +17379,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: sasl-scram512-with-tls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -17360,6 +17423,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: sasl-scram512-with-tls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -18067,6 +18131,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: single-replica
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -18793,6 +18858,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: storage-hostpath
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -18836,6 +18902,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: storage-hostpath
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -18879,6 +18946,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: storage-hostpath
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -19605,6 +19673,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: storage-pv-custom
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -19648,6 +19717,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: storage-pv-custom
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -19691,6 +19761,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: storage-pv-custom
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -20417,6 +20488,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-emptydir
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -20460,6 +20532,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-emptydir
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -20503,6 +20576,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-emptydir
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -21229,6 +21303,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-hostpath
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -21272,6 +21347,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-hostpath
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -21315,6 +21391,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-hostpath
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -22041,6 +22118,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-pv
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -22084,6 +22162,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-pv
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -22127,6 +22206,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tiered-storage-pv
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -22886,6 +22966,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tls-mtls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -22929,6 +23010,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tls-mtls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -22972,6 +23054,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tls-mtls
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -23698,6 +23781,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tls-self-signed
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "0"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -23741,6 +23825,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tls-self-signed
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "1"
     type: ClusterIP
   status:
     loadBalancer: {}
@@ -23784,6 +23869,7 @@
       app.kubernetes.io/component: redpanda-pool-a-statefulset
       app.kubernetes.io/instance: tls-self-signed
       app.kubernetes.io/name: redpanda
+      apps.kubernetes.io/pod-index: "2"
     type: ClusterIP
   status:
     loadBalancer: {}

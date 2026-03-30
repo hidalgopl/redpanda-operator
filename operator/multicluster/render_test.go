@@ -10,17 +10,13 @@
 package multicluster
 
 import (
-	"fmt"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 	"golang.org/x/tools/txtar"
-	corev1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/serializer"
-	"k8s.io/utils/ptr"
 	"sigs.k8s.io/yaml"
 
 	redpandav1alpha2 "github.com/redpanda-data/redpanda-operator/operator/api/redpanda/v1alpha2"
@@ -85,33 +81,19 @@ func TestRender(t *testing.T) {
 			cluster.Name = file.Name
 			cluster.Namespace = file.Name
 
-			// Construct RenderState with nil config (no K8s client).
-			state, err := NewRenderState(nil, cluster, pools, []string{}, "test")
-			require.NoError(t, err)
-
-			// If SASL is enabled, set a deterministic bootstrap user secret
+			// Pass a deterministic bootstrap password for SASL-enabled cases
 			// to avoid nondeterminism from random password generation.
-			if state.Spec().Auth.IsSASLEnabled() {
-				sasl := state.Spec().Auth.SASL
+			bootstrapPassword := ""
+			if cluster.Spec.Auth.IsSASLEnabled() {
+				sasl := cluster.Spec.Auth.SASL
 				if sasl.BootstrapUser == nil || sasl.BootstrapUser.SecretKeyRef == nil {
-					state.bootstrapUserSecret = &corev1.Secret{
-						TypeMeta: metav1.TypeMeta{
-							APIVersion: "v1",
-							Kind:       "Secret",
-						},
-						ObjectMeta: metav1.ObjectMeta{
-							Name:      fmt.Sprintf("%s-bootstrap-user", state.fullname()),
-							Namespace: state.namespace,
-							Labels:    state.commonLabels(),
-						},
-						Immutable: ptr.To(true),
-						Type:      corev1.SecretTypeOpaque,
-						StringData: map[string]string{
-							"password": "deterministic-test-password",
-						},
-					}
+					bootstrapPassword = "deterministic-test-password"
 				}
 			}
+
+			// Construct RenderState with nil config (no K8s client).
+			state, err := NewRenderState(nil, cluster, pools, []string{}, "test", bootstrapPassword)
+			require.NoError(t, err)
 
 			// Render node pools (StatefulSets).
 			sets, err := RenderNodePools(state)
